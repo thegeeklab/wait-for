@@ -35,7 +35,7 @@ wait_for() {
     fi
     sleep 1
   done
-  echo "Operation timed out" >&2
+  echo "error: operation timed out" >&2
   exit 1
 }
 
@@ -68,19 +68,19 @@ do
     usage 0
     ;;
     *)
-    echoerr "Unknown argument: $1"
+    echoerr "unknown argument: $1"
     usage 1
     ;;
   esac
 done
 
 if ! [ -x "$(command -v nc)" ]; then
-  echoerr "Error: netcat is required for wait-for to run."
+  echoerr "error: netcat is required for wait-for to run"
   exit 1
 fi
 
 if [ "$WAITFOR_HOST" = "" ] || [ "$WAITFOR_PORT" = "" ]; then
-  echoerr "Error: you need to provide a host and port to test."
+  echoerr "error: you need to provide a host and port to test"
   usage 2
 fi
 
