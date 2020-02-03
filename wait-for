@@ -10,18 +10,21 @@ echoerr() {
 usage() {
   exitcode="$1"
   cat << USAGE >&2
-Usage:
-  $0 host:port [-t timeout] [-- command args]
-  -q | --quiet                        Do not output any status messages
-  -t WAITFOR_TIMEOUT | --timeout=timeout      Timeout in seconds, zero for no timeout
-  -- COMMAND ARGS                     Execute command with args after the test finishes
+usage: wait-for host:port [-t timeout] [-- command args]
+
+Synchronize services like docker containers and wait for readiness.
+
+optional arguments:
+  -q | --quiet                              Do not output any status messages
+  -t WAITFOR_TIMEOUT | --timeout=timeout    Timeout in seconds, zero for no timeout
+  -- COMMAND ARGS                           Execute command with args after the test finishes
 USAGE
   exit "$exitcode"
 }
 
 wait_for() {
-  for _ in $(seq $WAITFOR_TIMEOUT) ; do
-    nc -z "$WAITFOR_HOST" "$WAITFOR_PORT" > /dev/null 2>&1
+  for _ in $(seq "$WAITFOR_TIMEOUT") ; do
+    nc -w 1 -z "$WAITFOR_HOST" "$WAITFOR_PORT" > /dev/null 2>&1
 
     result=$?
     if [ $result -eq 0 ] ; then
