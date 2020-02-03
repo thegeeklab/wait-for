@@ -8,6 +8,11 @@ platform:
   arch: amd64
 
 steps:
+- name: lint
+  image: koalaman/shellcheck-alpine:stable
+  commands:
+  - shellcheck ./wait-for
+
 - name: test
   image: bats/bats
   commands:
@@ -55,6 +60,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 495a8f60228b02351858fb8226da326dfacb1cfb3a749143a3d89218782e335b
+hmac: 6598a24cb0cb1cb6b21426c5085dcf5fd63b38ea6cb4492f04b06149361bd82a
 
 ...
