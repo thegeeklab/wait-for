@@ -1,5 +1,8 @@
 # wait-for
 
+[![Build Status](https://img.shields.io/drone/build/xoxys/wait-for?logo=drone)](https://cloud.drone.io/xoxys/wait-for)
+[![License: MIT](https://img.shields.io/github/license/xoxys/wait-for)](LICENSE)
+
 `./wait-for` is a script designed to synchronize services like docker containers. It is [sh](https://en.wikipedia.org/wiki/Bourne_shell) and [alpine](https://alpinelinux.org/) compatible. It was inspired by [vishnubob/wait-for-it](https://github.com/vishnubob/wait-for-it), but the core has been rewritten at [Eficode](http://eficode.com/) by [dsuni](https://github.com/dsuni) and [mrako](https://github.com/mrako).
 
 When using this tool, you only need to pick the `wait-for` file as part of your project.
@@ -42,15 +45,6 @@ services:
     command: sh -c './wait-for db:5432 -- npm start'
     depends_on:
       - db
-```
-
-## Testing
-
-Ironically testing is done using [bats](https://github.com/sstephenson/bats), which on the other hand is depending on [bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell)).
-
-```Shell
-docker build -t wait-for .
-docker run -t wait-for
 ```
 
 ### License

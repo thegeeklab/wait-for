@@ -1,0 +1,60 @@
+---
+kind: pipeline
+type: docker
+name: testing
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: test
+  image: bats/bats
+  commands:
+  - bats ./wait-for.bats
+
+trigger:
+  ref:
+  - refs/heads/master
+  - refs/tags/**
+  - refs/pull/**
+
+---
+kind: pipeline
+type: docker
+name: notification
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: matrix
+  image: plugins/matrix
+  settings:
+    homeserver:
+      from_secret: matrix_homeserver
+    password:
+      from_secret: matrix_password
+    roomid:
+      from_secret: matrix_roomid
+    template: "Status: **{{ build.status }}**<br/> Build: [{{ repo.Owner }}/{{ repo.Name }}]({{ build.link }}) ({{ build.branch }}) by {{ build.author }}<br/> Message: {{ build.message }}"
+    username:
+      from_secret: matrix_username
+
+trigger:
+  ref:
+  - refs/heads/master
+  - refs/tags/**
+  status:
+  - success
+  - failure
+
+depends_on:
+- testing
+
+---
+kind: signature
+hmac: 495a8f60228b02351858fb8226da326dfacb1cfb3a749143a3d89218782e335b
+
+...
