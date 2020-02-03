@@ -59,7 +59,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Maintainers and Contributors
 
-[Robert Kaussow](https://github.com/xoxys)
-
-[eficode](https://github.com/eficode)
+[Robert Kaussow](https://github.com/xoxys) &#8226;
+[eficode](https://github.com/eficode) &#8226;
 [Marko Klemetti](https://github.com/mrako)
