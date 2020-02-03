@@ -22,7 +22,7 @@ USAGE
 wait_for() {
   for i in `seq $TIMEOUT` ; do
     nc -z "$HOST" "$PORT" > /dev/null 2>&1
-    
+
     result=$?
     if [ $result -eq 0 ] ; then
       if [ $# -gt 0 ] ; then
@@ -70,6 +70,11 @@ do
     ;;
   esac
 done
+
+if ! [ -x "$(command -v nc)" ]; then
+  echoerr "Error: netcat is required for wait-for to run."
+  exit 1
+fi
 
 if [ "$HOST" = "" -o "$PORT" = "" ]; then
   echoerr "Error: you need to provide a host and port to test."
