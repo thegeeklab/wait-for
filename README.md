@@ -15,7 +15,7 @@ $ ./wait-for host:port [-t timeout] [-- command args]
 
 ## Dependencies
 
-* installed Netcat
+* Installed Netcat
 
 ## Examples
 
