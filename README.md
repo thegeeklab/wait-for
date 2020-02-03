@@ -10,10 +10,15 @@ When using this tool, you only need to pick the `wait-for` file as part of your 
 ## Usage
 
 ```Shell
-$ ./wait-for host:port [-t timeout] [-- command args]
-    -q | --quiet                        Do not output any status messages
-    -t TIMEOUT | --timeout=timeout      Timeout in seconds, zero for no timeout
-    -- COMMAND ARGS                     Execute command with args after the test finishes
+$ wait-for --help
+usage: wait-for host:port [-t timeout] [-- command args]
+
+Synchronize services like docker containers and wait for readiness.
+
+optional arguments:
+  -q | --quiet                              Do not output any status messages
+  -t WAITFOR_TIMEOUT | --timeout=timeout    Timeout in seconds, zero for no timeout
+  -- COMMAND ARGS                           Execute command with args after the test finishes
 ```
 
 ## Dependencies
@@ -27,7 +32,6 @@ To check if [eficode.com](https://eficode.com) is available:
 ```Shell
 $ ./wait-for www.eficode.com:80 -- echo "Eficode site is up"
 
-Connection to www.eficode.com port 80 [tcp/http] succeeded!
 Eficode site is up
 ```
 
