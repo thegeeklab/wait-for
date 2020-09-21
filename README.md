@@ -1,9 +1,12 @@
 # wait-for
 
-[![Build Status](https://img.shields.io/drone/build/xoxys/wait-for?logo=drone)](https://cloud.drone.io/xoxys/wait-for)
-[![License: MIT](https://img.shields.io/github/license/xoxys/wait-for)](LICENSE)
+Poor-mans docker service synchronizer
 
-`./wait-for` is a script designed to synchronize services like docker containers. It is [sh](https://en.wikipedia.org/wiki/Bourne_shell) and [alpine](https://alpinelinux.org/) compatible. It was inspired by [vishnubob/wait-for-it](https://github.com/vishnubob/wait-for-it), but the core has been rewritten at [Eficode](http://eficode.com/) by [dsuni](https://github.com/dsuni) and [mrako](https://github.com/mrako).
+[![Build Status](https://img.shields.io/drone/build/thegeeklab/wait-for?logo=drone)](https://cloud.drone.io/thegeeklab/wait-for)
+[![Source: GitHub](https://img.shields.io/badge/source-github-blue.svg?logo=github&logoColor=white)](https://github.com/thegeeklab/wait-for)
+[![License: MIT](https://img.shields.io/github/license/thegeeklab/wait-for)](<[LICENSE](https://github.com/thegeeklab/wait-for/blob/master/LICENSE)>)
+
+wait-for is a script designed to synchronize services like docker containers. It is [sh](https://en.wikipedia.org/wiki/Bourne_shell) and [alpine](https://alpinelinux.org/) compatible. It was inspired by [vishnubob/wait-for-it](https://github.com/vishnubob/wait-for-it), but the core has been rewritten at [Eficode](http://eficode.com/) by [dsuni](https://github.com/dsuni) and [mrako](https://github.com/mrako).
 
 When using this tool, you only need to pick the `wait-for` file as part of your project.
 
@@ -51,12 +54,10 @@ services:
       - db
 ```
 
+## Contributors
+
+Special thanks goes to all [contributors](https://github.com/thegeeklab/wait-for/graphs/contributors).
+
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Maintainers and Contributors
-
-[Robert Kaussow](https://github.com/xoxys) &#8226;
-[eficode](https://github.com/eficode) &#8226;
-[Marko Klemetti](https://github.com/mrako)
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/thegeeklab/wait-for/blob/master/LICENSE) file for details.
