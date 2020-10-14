@@ -1,7 +1,6 @@
 ---
 kind: pipeline
-type: docker
-name: testing
+name: test
 
 platform:
   os: linux
@@ -26,14 +25,281 @@ trigger:
 
 ---
 kind: pipeline
-type: docker
-name: notification
+name: build-container-amd64
 
 platform:
   os: linux
   arch: amd64
 
 steps:
+- name: dryrun
+  image: plugins/docker:18-linux-amd64
+  settings:
+    dockerfile: docker/Dockerfile
+    dry_run: true
+    password:
+      from_secret: docker_password
+    repo: thegeeklab/${DRONE_REPO_NAME}
+    username:
+      from_secret: docker_username
+  when:
+    ref:
+    - refs/pull/**
+  depends_on:
+  - build
+
+- name: publish-dockerhub
+  image: plugins/docker:18-linux-amd64
+  settings:
+    auto_tag: true
+    auto_tag_suffix: amd64
+    dockerfile: docker/Dockerfile
+    password:
+      from_secret: docker_password
+    repo: thegeeklab/${DRONE_REPO_NAME}
+    username:
+      from_secret: docker_username
+  when:
+    ref:
+    - refs/heads/master
+    - refs/tags/**
+  depends_on:
+  - dryrun
+
+- name: publish-quay
+  image: plugins/docker:18-linux-amd64
+  settings:
+    auto_tag: true
+    auto_tag_suffix: amd64
+    dockerfile: docker/Dockerfile
+    password:
+      from_secret: quay_password
+    registry: quay.io
+    repo: quay.io/thegeeklab/${DRONE_REPO_NAME}
+    username:
+      from_secret: quay_username
+  when:
+    ref:
+    - refs/heads/master
+    - refs/tags/**
+  depends_on:
+  - dryrun
+
+trigger:
+  ref:
+  - refs/heads/master
+  - refs/tags/**
+  - refs/pull/**
+
+depends_on:
+- test
+
+---
+kind: pipeline
+name: build-container-arm64
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: dryrun
+  image: plugins/docker:18-linux-arm64
+  settings:
+    dockerfile: docker/Dockerfile
+    dry_run: true
+    password:
+      from_secret: docker_password
+    repo: thegeeklab/${DRONE_REPO_NAME}
+    username:
+      from_secret: docker_username
+  when:
+    ref:
+    - refs/pull/**
+  depends_on:
+  - build
+
+- name: publish-dockerhub
+  image: plugins/docker:18-linux-arm64
+  settings:
+    auto_tag: true
+    auto_tag_suffix: arm64
+    dockerfile: docker/Dockerfile
+    password:
+      from_secret: docker_password
+    repo: thegeeklab/${DRONE_REPO_NAME}
+    username:
+      from_secret: docker_username
+  when:
+    ref:
+    - refs/heads/master
+    - refs/tags/**
+  depends_on:
+  - dryrun
+
+- name: publish-quay
+  image: plugins/docker:18-linux-arm64
+  settings:
+    auto_tag: true
+    auto_tag_suffix: arm64
+    dockerfile: docker/Dockerfile
+    password:
+      from_secret: quay_password
+    registry: quay.io
+    repo: quay.io/thegeeklab/${DRONE_REPO_NAME}
+    username:
+      from_secret: quay_username
+  when:
+    ref:
+    - refs/heads/master
+    - refs/tags/**
+  depends_on:
+  - dryrun
+
+trigger:
+  ref:
+  - refs/heads/master
+  - refs/tags/**
+  - refs/pull/**
+
+depends_on:
+- test
+
+---
+kind: pipeline
+name: build-container-arm
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+- name: dryrun
+  image: plugins/docker:18-linux-arm
+  settings:
+    dockerfile: docker/Dockerfile
+    dry_run: true
+    password:
+      from_secret: docker_password
+    repo: thegeeklab/${DRONE_REPO_NAME}
+    username:
+      from_secret: docker_username
+  when:
+    ref:
+    - refs/pull/**
+  depends_on:
+  - build
+
+- name: publish-dockerhub
+  image: plugins/docker:18-linux-arm
+  settings:
+    auto_tag: true
+    auto_tag_suffix: arm
+    dockerfile: docker/Dockerfile
+    password:
+      from_secret: docker_password
+    repo: thegeeklab/${DRONE_REPO_NAME}
+    username:
+      from_secret: docker_username
+  when:
+    ref:
+    - refs/heads/master
+    - refs/tags/**
+  depends_on:
+  - dryrun
+
+- name: publish-quay
+  image: plugins/docker:18-linux-arm
+  settings:
+    auto_tag: true
+    auto_tag_suffix: arm
+    dockerfile: docker/Dockerfile
+    password:
+      from_secret: quay_password
+    registry: quay.io
+    repo: quay.io/thegeeklab/${DRONE_REPO_NAME}
+    username:
+      from_secret: quay_username
+  when:
+    ref:
+    - refs/heads/master
+    - refs/tags/**
+  depends_on:
+  - dryrun
+
+trigger:
+  ref:
+  - refs/heads/master
+  - refs/tags/**
+  - refs/pull/**
+
+depends_on:
+- test
+
+---
+kind: pipeline
+name: notifications
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: manifest-dockerhub
+  image: plugins/manifest
+  settings:
+    auto_tag: true
+    ignore_missing: true
+    password:
+      from_secret: docker_password
+    spec: docker/manifest.tmpl
+    username:
+      from_secret: docker_username
+  when:
+    status:
+    - success
+
+- name: manifest-quay
+  image: plugins/manifest
+  settings:
+    auto_tag: true
+    ignore_missing: true
+    password:
+      from_secret: quay_password
+    spec: docker/manifest-quay.tmpl
+    username:
+      from_secret: quay_username
+  when:
+    status:
+    - success
+
+- name: pushrm-dockerhub
+  pull: always
+  image: chko/docker-pushrm:1
+  environment:
+    DOCKER_PASS:
+      from_secret: docker_password
+    DOCKER_USER:
+      from_secret: docker_username
+    PUSHRM_FILE: README.md
+    PUSHRM_SHORT: Another best practice scanner for Ansible roles and playbooks
+    PUSHRM_TARGET: thegeeklab/${DRONE_REPO_NAME}
+  when:
+    status:
+    - success
+
+- name: pushrm-quay
+  pull: always
+  image: chko/docker-pushrm:1
+  environment:
+    APIKEY__QUAY_IO:
+      from_secret: quay_token
+    PUSHRM_FILE: README.md
+    PUSHRM_TARGET: quay.io/thegeeklab/${DRONE_REPO_NAME}
+  when:
+    status:
+    - success
+
 - name: matrix
   image: plugins/matrix
   settings:
@@ -46,6 +312,10 @@ steps:
     template: "Status: **{{ build.status }}**<br/> Build: [{{ repo.Owner }}/{{ repo.Name }}]({{ build.link }}) ({{ build.branch }}) by {{ build.author }}<br/> Message: {{ build.message }}"
     username:
       from_secret: matrix_username
+  when:
+    status:
+    - success
+    - failure
 
 trigger:
   ref:
@@ -56,10 +326,12 @@ trigger:
   - failure
 
 depends_on:
-- testing
+- build-container-amd64
+- build-container-arm
+- build-container-arm64
 
 ---
 kind: signature
-hmac: c55f36569755b5cc723945669fd04f04c0f6e46649b08106a599a762157f6cf7
+hmac: 55bd4e5dec1d0b85685be44ea471cd34a611ebfc491bd8a6d1b5018a37556429
 
 ...
