@@ -8,7 +8,7 @@ LABEL maintainer="Robert Kaussow <mail@thegeeklab.de>" \
 
 ADD wait-for /usr/local/bin/wait-for
 
-RUN apk --no-cache netcat-openbsd
+RUN apk --no-cache add netcat-openbsd
 
 USER root
 CMD []
