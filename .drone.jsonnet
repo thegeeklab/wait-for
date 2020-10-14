@@ -44,7 +44,6 @@ local PipelineBuildContainer(arch='amd64') = {
         username: { from_secret: 'docker_username' },
         password: { from_secret: 'docker_password' },
       },
-      depends_on: ['build'],
       when: {
         ref: ['refs/pull/**'],
       },
@@ -63,7 +62,6 @@ local PipelineBuildContainer(arch='amd64') = {
       when: {
         ref: ['refs/heads/master', 'refs/tags/**'],
       },
-      depends_on: ['dryrun'],
     },
     {
       name: 'publish-quay',
@@ -80,7 +78,6 @@ local PipelineBuildContainer(arch='amd64') = {
       when: {
         ref: ['refs/heads/master', 'refs/tags/**'],
       },
-      depends_on: ['dryrun'],
     },
   ],
   depends_on: [

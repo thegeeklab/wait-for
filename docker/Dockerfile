@@ -8,6 +8,8 @@ LABEL maintainer="Robert Kaussow <mail@thegeeklab.de>" \
 
 ADD wait-for /usr/local/bin/wait-for
 
+RUN apk --no-cache netcat-openbsd
+
 USER root
 CMD []
 ENTRYPOINT ["/usr/local/bin/wait-for"]

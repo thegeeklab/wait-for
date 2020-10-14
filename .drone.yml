@@ -45,8 +45,6 @@ steps:
   when:
     ref:
     - refs/pull/**
-  depends_on:
-  - build
 
 - name: publish-dockerhub
   image: plugins/docker:18-linux-amd64
@@ -63,8 +61,6 @@ steps:
     ref:
     - refs/heads/master
     - refs/tags/**
-  depends_on:
-  - dryrun
 
 - name: publish-quay
   image: plugins/docker:18-linux-amd64
@@ -82,8 +78,6 @@ steps:
     ref:
     - refs/heads/master
     - refs/tags/**
-  depends_on:
-  - dryrun
 
 trigger:
   ref:
@@ -116,8 +110,6 @@ steps:
   when:
     ref:
     - refs/pull/**
-  depends_on:
-  - build
 
 - name: publish-dockerhub
   image: plugins/docker:18-linux-arm64
@@ -134,8 +126,6 @@ steps:
     ref:
     - refs/heads/master
     - refs/tags/**
-  depends_on:
-  - dryrun
 
 - name: publish-quay
   image: plugins/docker:18-linux-arm64
@@ -153,8 +143,6 @@ steps:
     ref:
     - refs/heads/master
     - refs/tags/**
-  depends_on:
-  - dryrun
 
 trigger:
   ref:
@@ -187,8 +175,6 @@ steps:
   when:
     ref:
     - refs/pull/**
-  depends_on:
-  - build
 
 - name: publish-dockerhub
   image: plugins/docker:18-linux-arm
@@ -205,8 +191,6 @@ steps:
     ref:
     - refs/heads/master
     - refs/tags/**
-  depends_on:
-  - dryrun
 
 - name: publish-quay
   image: plugins/docker:18-linux-arm
@@ -224,8 +208,6 @@ steps:
     ref:
     - refs/heads/master
     - refs/tags/**
-  depends_on:
-  - dryrun
 
 trigger:
   ref:
@@ -282,7 +264,7 @@ steps:
     DOCKER_USER:
       from_secret: docker_username
     PUSHRM_FILE: README.md
-    PUSHRM_SHORT: Another best practice scanner for Ansible roles and playbooks
+    PUSHRM_SHORT: Poor-mans docker service synchronizer
     PUSHRM_TARGET: thegeeklab/${DRONE_REPO_NAME}
   when:
     status:
@@ -332,6 +314,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 55bd4e5dec1d0b85685be44ea471cd34a611ebfc491bd8a6d1b5018a37556429
+hmac: ed7dce0d14be5798a9e179b1561bda835b2ef28ef73dd537213c289fbd356800
 
 ...
