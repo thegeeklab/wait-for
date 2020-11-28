@@ -1,5 +1,6 @@
 local PipelineTest = {
   kind: 'pipeline',
+  image_pull_secrets: ['docker_config'],
   name: 'test',
   platform: {
     os: 'linux',
@@ -28,6 +29,7 @@ local PipelineTest = {
 
 local PipelineBuildContainer(arch='amd64') = {
   kind: 'pipeline',
+  image_pull_secrets: ['docker_config'],
   name: 'build-container-' + arch,
   platform: {
     os: 'linux',
@@ -36,8 +38,9 @@ local PipelineBuildContainer(arch='amd64') = {
   steps: [
     {
       name: 'dryrun',
-      image: 'plugins/docker:18-linux-' + arch,
+      image: 'plugins/docker:19',
       settings: {
+        config: { from_secret: 'docker_config' },
         dry_run: true,
         dockerfile: 'docker/Dockerfile',
         repo: 'thegeeklab/${DRONE_REPO_NAME}',
@@ -50,8 +53,9 @@ local PipelineBuildContainer(arch='amd64') = {
     },
     {
       name: 'publish-dockerhub',
-      image: 'plugins/docker:18-linux-' + arch,
+      image: 'plugins/docker:19',
       settings: {
+        config: { from_secret: 'docker_config' },
         auto_tag: true,
         auto_tag_suffix: arch,
         dockerfile: 'docker/Dockerfile',
@@ -65,8 +69,9 @@ local PipelineBuildContainer(arch='amd64') = {
     },
     {
       name: 'publish-quay',
-      image: 'plugins/docker:18-linux-' + arch,
+      image: 'plugins/docker:19',
       settings: {
+        config: { from_secret: 'docker_config' },
         auto_tag: true,
         auto_tag_suffix: arch,
         dockerfile: 'docker/Dockerfile',
@@ -90,6 +95,7 @@ local PipelineBuildContainer(arch='amd64') = {
 
 local PipelineNotifications = {
   kind: 'pipeline',
+  image_pull_secrets: ['docker_config'],
   name: 'notifications',
   platform: {
     os: 'linux',
