@@ -14,4 +14,5 @@
 
 - **docker**: switch to org.opencontainers image labels
 - **docker**: use standalone dockerfiles for multiarch
+- **deps**: pin docker digests ([#2](https://github.com/thegeeklab/wait-for/issues/2))
 - use renovate preset config
