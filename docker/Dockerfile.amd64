@@ -1,4 +1,4 @@
-FROM alpine:3.12
+FROM amd64/alpine:3.12
 
 LABEL maintainer="Robert Kaussow <mail@thegeeklab.de>" \
     org.label-schema.name="wait-for" \
