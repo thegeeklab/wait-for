@@ -9,7 +9,7 @@ Poor-mans docker service synchronizer
 [![Source: GitHub](https://img.shields.io/badge/source-github-blue.svg?logo=github&logoColor=white)](https://github.com/thegeeklab/wait-for)
 [![License: MIT](https://img.shields.io/github/license/thegeeklab/wait-for)](https://github.com/thegeeklab/wait-for/blob/master/LICENSE)
 
-wait-for is a script designed to synchronize services like docker containers. It is [sh](https://en.wikipedia.org/wiki/Bourne_shell) and [alpine](https://alpinelinux.org/) compatible. It was inspired by [vishnubob/wait-for-it](https://github.com/vishnubob/wait-for-it), but the core has been rewritten at [Eficode](http://eficode.com/) by [dsuni](https://github.com/dsuni) and [mrako](https://github.com/mrako).
+wait-for is a script designed to synchronize services like docker containers. It is [sh](https://en.wikipedia.org/wiki/Bourne_shell) and [alpine](https://alpinelinux.org/) compatible and was forked from [eficode/wait-for](https://github.com/eficode/wait-for).
 
 When using this tool, you only need to pick the `wait-for` file as part of your project.
 
@@ -33,12 +33,12 @@ optional arguments:
 
 ## Examples
 
-To check if [eficode.com](https://eficode.com) is available:
+To check if [google.com](https://google.com) is available:
 
 ```Shell
-$ ./wait-for www.eficode.com:80 -- echo "Eficode site is up"
+$ ./wait-for google.com:80 -- echo "Google site is up"
 
-Eficode site is up
+Google site is up
 ```
 
 To wait for database container to become available:
@@ -59,7 +59,8 @@ services:
 
 ## Contributors
 
-Special thanks goes to all [contributors](https://github.com/thegeeklab/wait-for/graphs/contributors).
+Special thanks goes to all [contributors](https://github.com/thegeeklab/wait-for/graphs/contributors). If you would like to contribute,
+please see the [instructions](https://github.com/thegeeklab/wait-for/blob/master/CONTRIBUTING.md).
 
 ## License
 
