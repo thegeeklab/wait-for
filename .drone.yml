@@ -81,7 +81,7 @@ steps:
   settings:
     config:
       from_secret: docker_config
-    dockerfile: docker/Dockerfile
+    dockerfile: docker/Dockerfile.amd64
     dry_run: true
     password:
       from_secret: docker_password
@@ -99,7 +99,7 @@ steps:
     auto_tag_suffix: amd64
     config:
       from_secret: docker_config
-    dockerfile: docker/Dockerfile
+    dockerfile: docker/Dockerfile.amd64
     password:
       from_secret: docker_password
     repo: thegeeklab/${DRONE_REPO_NAME}
@@ -117,7 +117,7 @@ steps:
     auto_tag_suffix: amd64
     config:
       from_secret: docker_config
-    dockerfile: docker/Dockerfile
+    dockerfile: docker/Dockerfile.amd64
     password:
       from_secret: quay_password
     registry: quay.io
@@ -155,7 +155,7 @@ steps:
   settings:
     config:
       from_secret: docker_config
-    dockerfile: docker/Dockerfile
+    dockerfile: docker/Dockerfile.arm64
     dry_run: true
     password:
       from_secret: docker_password
@@ -173,7 +173,7 @@ steps:
     auto_tag_suffix: arm64
     config:
       from_secret: docker_config
-    dockerfile: docker/Dockerfile
+    dockerfile: docker/Dockerfile.arm64
     password:
       from_secret: docker_password
     repo: thegeeklab/${DRONE_REPO_NAME}
@@ -191,7 +191,7 @@ steps:
     auto_tag_suffix: arm64
     config:
       from_secret: docker_config
-    dockerfile: docker/Dockerfile
+    dockerfile: docker/Dockerfile.arm64
     password:
       from_secret: quay_password
     registry: quay.io
@@ -229,7 +229,7 @@ steps:
   settings:
     config:
       from_secret: docker_config
-    dockerfile: docker/Dockerfile
+    dockerfile: docker/Dockerfile.arm
     dry_run: true
     password:
       from_secret: docker_password
@@ -247,7 +247,7 @@ steps:
     auto_tag_suffix: arm
     config:
       from_secret: docker_config
-    dockerfile: docker/Dockerfile
+    dockerfile: docker/Dockerfile.arm
     password:
       from_secret: docker_password
     repo: thegeeklab/${DRONE_REPO_NAME}
@@ -265,7 +265,7 @@ steps:
     auto_tag_suffix: arm
     config:
       from_secret: docker_config
-    dockerfile: docker/Dockerfile
+    dockerfile: docker/Dockerfile.arm
     password:
       from_secret: quay_password
     registry: quay.io
@@ -388,6 +388,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: cd3964127ba23a4f794b0ed48cbe2cef784c69e01837bccfaad4337a78f03664
+hmac: c461c1d913869e8c12163de44f1f99edd8edfff86d33e549a37ae3b4c64b2ac7
 
 ...
