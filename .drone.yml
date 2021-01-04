@@ -28,6 +28,47 @@ trigger:
 
 ---
 kind: pipeline
+name: build-package
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: checksum
+  image: alpine
+  commands:
+  - sha256sum wait-for > sha256sum.txt
+
+- name: publish-github
+  image: plugins/github-release
+  settings:
+    api_key:
+      from_secret: github_token
+    files:
+    - wait-for
+    - sha256sum.txt
+    note: CHANGELOG.md
+    overwrite: true
+    title: ${DRONE_TAG}
+  when:
+    ref:
+    - refs/tags/**
+
+image_pull_secrets:
+- docker_config
+
+trigger:
+  ref:
+  - refs/heads/master
+  - refs/tags/**
+  - refs/pull/**
+
+depends_on:
+- test
+
+---
+kind: pipeline
 name: build-container-amd64
 
 platform:
@@ -347,6 +388,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 22c03cba1bdc4e88f031f2f0cc8b6bcc6c366a03c855318299a6c18805260d2e
+hmac: cd3964127ba23a4f794b0ed48cbe2cef784c69e01837bccfaad4337a78f03664
 
 ...

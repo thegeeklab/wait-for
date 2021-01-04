@@ -27,6 +27,45 @@ local PipelineTest = {
   },
 };
 
+local PipelineBuildPackage = {
+  kind: 'pipeline',
+  image_pull_secrets: ['docker_config'],
+  name: 'build-package',
+  platform: {
+    os: 'linux',
+    arch: 'amd64',
+  },
+  steps: [
+    {
+      name: 'checksum',
+      image: 'alpine',
+      commands: [
+        'sha256sum wait-for > sha256sum.txt',
+      ],
+    },
+    {
+      name: 'publish-github',
+      image: 'plugins/github-release',
+      settings: {
+        overwrite: true,
+        api_key: { from_secret: 'github_token' },
+        files: ['wait-for', 'sha256sum.txt'],
+        title: '${DRONE_TAG}',
+        note: 'CHANGELOG.md',
+      },
+      when: {
+        ref: ['refs/tags/**'],
+      },
+    },
+  ],
+  depends_on: [
+    'test',
+  ],
+  trigger: {
+    ref: ['refs/heads/master', 'refs/tags/**', 'refs/pull/**'],
+  },
+};
+
 local PipelineBuildContainer(arch='amd64') = {
   kind: 'pipeline',
   image_pull_secrets: ['docker_config'],
@@ -192,6 +231,7 @@ local PipelineNotifications = {
 
 [
   PipelineTest,
+  PipelineBuildPackage,
   PipelineBuildContainer(arch='amd64'),
   PipelineBuildContainer(arch='arm64'),
   PipelineBuildContainer(arch='arm'),
