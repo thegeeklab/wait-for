@@ -2,7 +2,7 @@
 
 Poor-mans docker service synchronizer
 
-[![Build Status](https://img.shields.io/drone/build/thegeeklab/wait-for?logo=drone)](https://drone.thegeeklab.de/thegeeklab/wait-for)
+[![Build Status](https://img.shields.io/drone/build/thegeeklab/wait-for?logo=drone&server=https%3A%2F%2Fdrone.thegeeklab.de)](https://drone.thegeeklab.de/thegeeklab/wait-for)
 [![Docker Hub](https://img.shields.io/badge/dockerhub-latest-blue.svg?logo=docker&logoColor=white)](https://hub.docker.com/r/thegeeklab/wait-for)
 [![Quay.io](https://img.shields.io/badge/quay-latest-blue.svg?logo=docker&logoColor=white)](https://quay.io/repository/thegeeklab/wait-for)
 [![GitHub contributors](https://img.shields.io/github/contributors/thegeeklab/wait-for)](https://github.com/thegeeklab/wait-for/graphs/contributors)
