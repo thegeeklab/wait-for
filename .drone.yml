@@ -71,7 +71,7 @@ platform:
 
 steps:
 - name: dryrun
-  image: plugins/docker:19
+  image: thegeeklab/drone-docker:19
   settings:
     dockerfile: docker/Dockerfile.amd64
     dry_run: true
@@ -85,7 +85,7 @@ steps:
     - refs/pull/**
 
 - name: publish-dockerhub
-  image: plugins/docker:19
+  image: thegeeklab/drone-docker:19
   settings:
     auto_tag: true
     auto_tag_suffix: amd64
@@ -101,7 +101,7 @@ steps:
     - refs/tags/**
 
 - name: publish-quay
-  image: plugins/docker:19
+  image: thegeeklab/drone-docker:19
   settings:
     auto_tag: true
     auto_tag_suffix: amd64
@@ -136,7 +136,7 @@ platform:
 
 steps:
 - name: dryrun
-  image: plugins/docker:19
+  image: thegeeklab/drone-docker:19
   settings:
     dockerfile: docker/Dockerfile.arm64
     dry_run: true
@@ -150,7 +150,7 @@ steps:
     - refs/pull/**
 
 - name: publish-dockerhub
-  image: plugins/docker:19
+  image: thegeeklab/drone-docker:19
   settings:
     auto_tag: true
     auto_tag_suffix: arm64
@@ -166,7 +166,7 @@ steps:
     - refs/tags/**
 
 - name: publish-quay
-  image: plugins/docker:19
+  image: thegeeklab/drone-docker:19
   settings:
     auto_tag: true
     auto_tag_suffix: arm64
@@ -201,7 +201,7 @@ platform:
 
 steps:
 - name: dryrun
-  image: plugins/docker:19
+  image: thegeeklab/drone-docker:19
   settings:
     dockerfile: docker/Dockerfile.arm
     dry_run: true
@@ -215,7 +215,7 @@ steps:
     - refs/pull/**
 
 - name: publish-dockerhub
-  image: plugins/docker:19
+  image: thegeeklab/drone-docker:19
   settings:
     auto_tag: true
     auto_tag_suffix: arm
@@ -231,7 +231,7 @@ steps:
     - refs/tags/**
 
 - name: publish-quay
-  image: plugins/docker:19
+  image: thegeeklab/drone-docker:19
   settings:
     auto_tag: true
     auto_tag_suffix: arm
@@ -352,6 +352,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 3ed9851ff5265442e4d869982a24401bf241a4a7d75b884a2ed7702d294bd60f
+hmac: a68c22e6a450b343f4afb60d448d03b03db8fbb2c98296e5d40a30e1c5dfe066
 
 ...
