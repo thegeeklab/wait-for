@@ -22,7 +22,7 @@ local PipelineTest = {
     },
   ],
   trigger: {
-    ref: ['refs/heads/master', 'refs/tags/**', 'refs/pull/**'],
+    ref: ['refs/heads/main', 'refs/tags/**', 'refs/pull/**'],
   },
 };
 
@@ -69,7 +69,7 @@ local PipelineBuildPackage = {
     'test',
   ],
   trigger: {
-    ref: ['refs/heads/master', 'refs/tags/**', 'refs/pull/**'],
+    ref: ['refs/heads/main', 'refs/tags/**', 'refs/pull/**'],
   },
 };
 
@@ -107,7 +107,7 @@ local PipelineBuildContainer(arch='amd64') = {
         password: { from_secret: 'docker_password' },
       },
       when: {
-        ref: ['refs/heads/master', 'refs/tags/**'],
+        ref: ['refs/heads/main', 'refs/tags/**'],
       },
     },
     {
@@ -123,7 +123,7 @@ local PipelineBuildContainer(arch='amd64') = {
         password: { from_secret: 'quay_password' },
       },
       when: {
-        ref: ['refs/heads/master', 'refs/tags/**'],
+        ref: ['refs/heads/main', 'refs/tags/**'],
       },
     },
   ],
@@ -131,7 +131,7 @@ local PipelineBuildContainer(arch='amd64') = {
     'test',
   ],
   trigger: {
-    ref: ['refs/heads/master', 'refs/tags/**', 'refs/pull/**'],
+    ref: ['refs/heads/main', 'refs/tags/**', 'refs/pull/**'],
   },
 };
 
@@ -226,7 +226,7 @@ local PipelineNotifications = {
     'build-container-arm64',
   ],
   trigger: {
-    ref: ['refs/heads/master', 'refs/tags/**'],
+    ref: ['refs/heads/main', 'refs/tags/**'],
     status: ['success', 'failure'],
   },
 };

@@ -7,7 +7,7 @@ Poor-mans docker service synchronizer
 [![Quay.io](https://img.shields.io/badge/quay-latest-blue.svg?logo=docker&logoColor=white)](https://quay.io/repository/thegeeklab/wait-for)
 [![GitHub contributors](https://img.shields.io/github/contributors/thegeeklab/wait-for)](https://github.com/thegeeklab/wait-for/graphs/contributors)
 [![Source: GitHub](https://img.shields.io/badge/source-github-blue.svg?logo=github&logoColor=white)](https://github.com/thegeeklab/wait-for)
-[![License: MIT](https://img.shields.io/github/license/thegeeklab/wait-for)](https://github.com/thegeeklab/wait-for/blob/master/LICENSE)
+[![License: MIT](https://img.shields.io/github/license/thegeeklab/wait-for)](https://github.com/thegeeklab/wait-for/blob/main/LICENSE)
 
 wait-for is a script designed to synchronize services like docker containers. It is [sh](https://en.wikipedia.org/wiki/Bourne_shell) and [alpine](https://alpinelinux.org/) compatible and was forked from [eficode/wait-for](https://github.com/eficode/wait-for).
 
@@ -60,8 +60,8 @@ services:
 ## Contributors
 
 Special thanks goes to all [contributors](https://github.com/thegeeklab/wait-for/graphs/contributors). If you would like to contribute,
-please see the [instructions](https://github.com/thegeeklab/wait-for/blob/master/CONTRIBUTING.md).
+please see the [instructions](https://github.com/thegeeklab/wait-for/blob/main/CONTRIBUTING.md).
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/thegeeklab/wait-for/blob/master/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/thegeeklab/wait-for/blob/main/LICENSE) file for details.

@@ -19,7 +19,7 @@ steps:
 
 trigger:
   ref:
-  - refs/heads/master
+  - refs/heads/main
   - refs/tags/**
   - refs/pull/**
 
@@ -61,7 +61,7 @@ steps:
 
 trigger:
   ref:
-  - refs/heads/master
+  - refs/heads/main
   - refs/tags/**
   - refs/pull/**
 
@@ -104,7 +104,7 @@ steps:
       from_secret: docker_username
   when:
     ref:
-    - refs/heads/master
+    - refs/heads/main
     - refs/tags/**
 
 - name: publish-quay
@@ -121,12 +121,12 @@ steps:
       from_secret: quay_username
   when:
     ref:
-    - refs/heads/master
+    - refs/heads/main
     - refs/tags/**
 
 trigger:
   ref:
-  - refs/heads/master
+  - refs/heads/main
   - refs/tags/**
   - refs/pull/**
 
@@ -169,7 +169,7 @@ steps:
       from_secret: docker_username
   when:
     ref:
-    - refs/heads/master
+    - refs/heads/main
     - refs/tags/**
 
 - name: publish-quay
@@ -186,12 +186,12 @@ steps:
       from_secret: quay_username
   when:
     ref:
-    - refs/heads/master
+    - refs/heads/main
     - refs/tags/**
 
 trigger:
   ref:
-  - refs/heads/master
+  - refs/heads/main
   - refs/tags/**
   - refs/pull/**
 
@@ -234,7 +234,7 @@ steps:
       from_secret: docker_username
   when:
     ref:
-    - refs/heads/master
+    - refs/heads/main
     - refs/tags/**
 
 - name: publish-quay
@@ -251,12 +251,12 @@ steps:
       from_secret: quay_username
   when:
     ref:
-    - refs/heads/master
+    - refs/heads/main
     - refs/tags/**
 
 trigger:
   ref:
-  - refs/heads/master
+  - refs/heads/main
   - refs/tags/**
   - refs/pull/**
 
@@ -346,7 +346,7 @@ steps:
 
 trigger:
   ref:
-  - refs/heads/master
+  - refs/heads/main
   - refs/tags/**
   status:
   - success
@@ -359,6 +359,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: b13616fead2f7e74acb1de005f187debac0ff31355cbcd12ac2e7bc2e5a80239
+hmac: e5b493ca16ac60cad643d506e88920384b9c07494d7d0cf854f798a0ca08e2dc
 
 ...
