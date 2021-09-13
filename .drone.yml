@@ -1,56 +1,49 @@
 ---
 kind: pipeline
 name: test
-
 platform:
-  os: linux
   arch: amd64
-
+  os: linux
 steps:
-- name: lint
-  image: koalaman/shellcheck-alpine:stable
-  commands:
+- commands:
   - shellcheck ./wait-for
-
-- name: test
-  image: bats/bats
-  commands:
+  image: koalaman/shellcheck-alpine:stable
+  name: lint
+- commands:
   - bats ./wait-for.bats
-
+  image: bats/bats
+  name: test
 trigger:
   ref:
   - refs/heads/main
   - refs/tags/**
   - refs/pull/**
-
 ---
+depends_on:
+- test
 kind: pipeline
 name: build-package
-
 platform:
-  os: linux
   arch: amd64
-
+  os: linux
 steps:
-- name: checksum
-  image: alpine
-  commands:
+- commands:
   - sha256sum wait-for > sha256sum.txt
-
-- name: changelog-generate
-  image: thegeeklab/git-chglog
-  commands:
+  image: alpine
+  name: checksum
+- commands:
   - git fetch -tq
-  - git-chglog --no-color --no-emoji -o CHANGELOG.md ${DRONE_TAG:---next-tag unreleased unreleased}
-
-- name: changelog-format
-  image: thegeeklab/alpine-tools
-  commands:
+  - git-chglog --no-color --no-emoji -o CHANGELOG.md ${DRONE_TAG:---next-tag unreleased
+    unreleased}
+  image: thegeeklab/git-chglog
+  name: changelog-generate
+- commands:
   - prettier CHANGELOG.md
   - prettier -w CHANGELOG.md
-
-- name: publish-github
-  image: plugins/github-release
+  image: thegeeklab/alpine-tools
+  name: changelog-format
+- image: plugins/github-release
+  name: publish-github
   settings:
     api_key:
       from_secret: github_token
@@ -63,27 +56,22 @@ steps:
   when:
     ref:
     - refs/tags/**
-
 trigger:
   ref:
   - refs/heads/main
   - refs/tags/**
   - refs/pull/**
-
+---
 depends_on:
 - test
-
----
 kind: pipeline
 name: build-container-amd64
-
 platform:
-  os: linux
   arch: amd64
-
+  os: linux
 steps:
-- name: dryrun
-  image: thegeeklab/drone-docker:19
+- image: thegeeklab/drone-docker:19
+  name: dryrun
   settings:
     dockerfile: docker/Dockerfile.amd64
     dry_run: true
@@ -95,9 +83,8 @@ steps:
   when:
     ref:
     - refs/pull/**
-
-- name: publish-dockerhub
-  image: thegeeklab/drone-docker:19
+- image: thegeeklab/drone-docker:19
+  name: publish-dockerhub
   settings:
     auto_tag: true
     auto_tag_suffix: amd64
@@ -111,9 +98,8 @@ steps:
     ref:
     - refs/heads/main
     - refs/tags/**
-
-- name: publish-quay
-  image: thegeeklab/drone-docker:19
+- image: thegeeklab/drone-docker:19
+  name: publish-quay
   settings:
     auto_tag: true
     auto_tag_suffix: amd64
@@ -128,27 +114,22 @@ steps:
     ref:
     - refs/heads/main
     - refs/tags/**
-
 trigger:
   ref:
   - refs/heads/main
   - refs/tags/**
   - refs/pull/**
-
+---
 depends_on:
 - test
-
----
 kind: pipeline
 name: build-container-arm64
-
 platform:
-  os: linux
   arch: arm64
-
+  os: linux
 steps:
-- name: dryrun
-  image: thegeeklab/drone-docker:19
+- image: thegeeklab/drone-docker:19
+  name: dryrun
   settings:
     dockerfile: docker/Dockerfile.arm64
     dry_run: true
@@ -160,9 +141,8 @@ steps:
   when:
     ref:
     - refs/pull/**
-
-- name: publish-dockerhub
-  image: thegeeklab/drone-docker:19
+- image: thegeeklab/drone-docker:19
+  name: publish-dockerhub
   settings:
     auto_tag: true
     auto_tag_suffix: arm64
@@ -176,9 +156,8 @@ steps:
     ref:
     - refs/heads/main
     - refs/tags/**
-
-- name: publish-quay
-  image: thegeeklab/drone-docker:19
+- image: thegeeklab/drone-docker:19
+  name: publish-quay
   settings:
     auto_tag: true
     auto_tag_suffix: arm64
@@ -193,27 +172,22 @@ steps:
     ref:
     - refs/heads/main
     - refs/tags/**
-
 trigger:
   ref:
   - refs/heads/main
   - refs/tags/**
   - refs/pull/**
-
+---
 depends_on:
 - test
-
----
 kind: pipeline
 name: build-container-arm
-
 platform:
-  os: linux
   arch: arm
-
+  os: linux
 steps:
-- name: dryrun
-  image: thegeeklab/drone-docker:19
+- image: thegeeklab/drone-docker:19
+  name: dryrun
   settings:
     dockerfile: docker/Dockerfile.arm
     dry_run: true
@@ -225,9 +199,8 @@ steps:
   when:
     ref:
     - refs/pull/**
-
-- name: publish-dockerhub
-  image: thegeeklab/drone-docker:19
+- image: thegeeklab/drone-docker:19
+  name: publish-dockerhub
   settings:
     auto_tag: true
     auto_tag_suffix: arm
@@ -241,9 +214,8 @@ steps:
     ref:
     - refs/heads/main
     - refs/tags/**
-
-- name: publish-quay
-  image: thegeeklab/drone-docker:19
+- image: thegeeklab/drone-docker:19
+  name: publish-quay
   settings:
     auto_tag: true
     auto_tag_suffix: arm
@@ -258,27 +230,24 @@ steps:
     ref:
     - refs/heads/main
     - refs/tags/**
-
 trigger:
   ref:
   - refs/heads/main
   - refs/tags/**
   - refs/pull/**
-
-depends_on:
-- test
-
 ---
+depends_on:
+- build-container-amd64
+- build-container-arm
+- build-container-arm64
 kind: pipeline
 name: notifications
-
 platform:
-  os: linux
   arch: amd64
-
+  os: linux
 steps:
-- name: manifest-dockerhub
-  image: plugins/manifest
+- image: plugins/manifest
+  name: manifest-dockerhub
   settings:
     auto_tag: true
     ignore_missing: true
@@ -290,9 +259,8 @@ steps:
   when:
     status:
     - success
-
-- name: manifest-quay
-  image: plugins/manifest
+- image: plugins/manifest
+  name: manifest-quay
   settings:
     auto_tag: true
     ignore_missing: true
@@ -304,11 +272,7 @@ steps:
   when:
     status:
     - success
-
-- name: pushrm-dockerhub
-  pull: always
-  image: chko/docker-pushrm:1
-  environment:
+- environment:
     DOCKER_PASS:
       from_secret: docker_password
     DOCKER_USER:
@@ -316,24 +280,25 @@ steps:
     PUSHRM_FILE: README.md
     PUSHRM_SHORT: Poor-mans docker service synchronizer
     PUSHRM_TARGET: thegeeklab/${DRONE_REPO_NAME}
+  image: chko/docker-pushrm:1
+  name: pushrm-dockerhub
+  pull: always
   when:
     status:
     - success
-
-- name: pushrm-quay
-  pull: always
-  image: chko/docker-pushrm:1
-  environment:
+- environment:
     APIKEY__QUAY_IO:
       from_secret: quay_token
     PUSHRM_FILE: README.md
     PUSHRM_TARGET: quay.io/thegeeklab/${DRONE_REPO_NAME}
+  image: chko/docker-pushrm:1
+  name: pushrm-quay
+  pull: always
   when:
     status:
     - success
-
-- name: matrix
-  image: plugins/matrix
+- image: plugins/matrix
+  name: matrix
   settings:
     homeserver:
       from_secret: matrix_homeserver
@@ -341,14 +306,15 @@ steps:
       from_secret: matrix_password
     roomid:
       from_secret: matrix_roomid
-    template: "Status: **{{ build.status }}**<br/> Build: [{{ repo.Owner }}/{{ repo.Name }}]({{ build.link }}) ({{ build.branch }}) by {{ build.author }}<br/> Message: {{ build.message }}"
+    template: 'Status: **{{ build.status }}**<br/> Build: [{{ repo.Owner }}/{{ repo.Name
+      }}]({{ build.link }}) ({{ build.branch }}) by {{ build.author }}<br/> Message:
+      {{ build.message }}'
     username:
       from_secret: matrix_username
   when:
     status:
     - success
     - failure
-
 trigger:
   ref:
   - refs/heads/main
@@ -356,14 +322,8 @@ trigger:
   status:
   - success
   - failure
-
-depends_on:
-- build-container-amd64
-- build-container-arm
-- build-container-arm64
-
 ---
 kind: signature
-hmac: 2bf0348e9246595526e80674f998395345ba82fb9cb71b1b46daa152c6464b4b
+hmac: 6fbd749273f067a96f12909fd22d46b28fa32bf61a13000ecd04a760f628140d
 
 ...
