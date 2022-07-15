@@ -1,7 +1,7 @@
 repository:
   name: wait-for
-  description: Poor-mans docker service synchronizer
-  topics: cli, tools, docker
+  description: Poor-mans service synchronizer
+  topics: cli, tools, oci
 
   private: false
   has_issues: true

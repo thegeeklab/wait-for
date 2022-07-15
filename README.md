@@ -1,6 +1,6 @@
 # wait-for
 
-Poor-mans docker service synchronizer
+Poor-mans servie synchronizer
 
 [![Build Status](https://img.shields.io/drone/build/thegeeklab/wait-for?logo=drone&server=https%3A%2F%2Fdrone.thegeeklab.de)](https://drone.thegeeklab.de/thegeeklab/wait-for)
 [![Docker Hub](https://img.shields.io/badge/dockerhub-latest-blue.svg?logo=docker&logoColor=white)](https://hub.docker.com/r/thegeeklab/wait-for)
@@ -9,7 +9,7 @@ Poor-mans docker service synchronizer
 [![Source: GitHub](https://img.shields.io/badge/source-github-blue.svg?logo=github&logoColor=white)](https://github.com/thegeeklab/wait-for)
 [![License: MIT](https://img.shields.io/github/license/thegeeklab/wait-for)](https://github.com/thegeeklab/wait-for/blob/main/LICENSE)
 
-wait-for is a script designed to synchronize services like docker containers. It is [sh](https://en.wikipedia.org/wiki/Bourne_shell) and [alpine](https://alpinelinux.org/) compatible and was forked from [eficode/wait-for](https://github.com/eficode/wait-for).
+wait-for is a script designed to synchronize services like containers. It is [sh](https://en.wikipedia.org/wiki/Bourne_shell) and [alpine](https://alpinelinux.org/) compatible and was forked from [eficode/wait-for](https://github.com/eficode/wait-for).
 
 When using this tool, you only need to pick the `wait-for` file as part of your project.
 
@@ -19,7 +19,7 @@ When using this tool, you only need to pick the `wait-for` file as part of your 
 $ wait-for --help
 usage: wait-for host:port [-t timeout] [-- command args]
 
-Synchronize services like docker containers and wait for readiness.
+Synchronize services like containers and wait for readiness.
 
 optional arguments:
   -q | --quiet                              Do not output any status messages
@@ -59,8 +59,7 @@ services:
 
 ## Contributors
 
-Special thanks goes to all [contributors](https://github.com/thegeeklab/wait-for/graphs/contributors). If you would like to contribute,
-please see the [instructions](https://github.com/thegeeklab/wait-for/blob/main/CONTRIBUTING.md).
+Special thanks to all [contributors](https://github.com/thegeeklab/wait-for/graphs/contributors). If you would like to contribute, please see the [instructions](https://github.com/thegeeklab/wait-for/blob/main/CONTRIBUTING.md).
 
 ## License
 
