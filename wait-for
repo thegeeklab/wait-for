@@ -9,10 +9,10 @@ echoerr() {
 
 usage() {
   exitcode="$1"
-  cat << USAGE >&2
+  cat <<USAGE >&2
 usage: wait-for host:port [-t timeout] [-- command args]
 
-Synchronize services like docker containers and wait for readiness.
+Synchronize services like containers and wait for readiness.
 
 optional arguments:
   -q | --quiet                              Do not output any status messages
@@ -23,12 +23,12 @@ USAGE
 }
 
 wait_for() {
-  for _ in $(seq "$WAITFOR_TIMEOUT") ; do
-    nc -w 1 -z "$WAITFOR_HOST" "$WAITFOR_PORT" > /dev/null 2>&1
+  for _ in $(seq "$WAITFOR_TIMEOUT"); do
+    nc -w 1 -z "$WAITFOR_HOST" "$WAITFOR_PORT" >/dev/null 2>&1
 
     result=$?
-    if [ $result -eq 0 ] ; then
-      if [ $# -gt 0 ] ; then
+    if [ $result -eq 0 ]; then
+      if [ $# -gt 0 ]; then
         exec "$@"
       fi
       exit 0
@@ -39,35 +39,34 @@ wait_for() {
   exit 1
 }
 
-while [ $# -gt 0 ]
-do
+while [ $# -gt 0 ]; do
   case "$1" in
-    *:* )
-    WAITFOR_HOST=$(printf "%s\n" "$1"| cut -d : -f 1)
-    WAITFOR_PORT=$(printf "%s\n" "$1"| cut -d : -f 2)
+  *:*)
+    WAITFOR_HOST=$(printf "%s\n" "$1" | cut -d : -f 1)
+    WAITFOR_PORT=$(printf "%s\n" "$1" | cut -d : -f 2)
     shift 1
     ;;
-    -q | --quiet)
+  -q | --quiet)
     WAITFOR_QUIET=1
     shift 1
     ;;
-    -t)
+  -t)
     WAITFOR_TIMEOUT="$2"
     if [ "$WAITFOR_TIMEOUT" = "" ]; then break; fi
     shift 2
     ;;
-    --timeout=*)
+  --timeout=*)
     WAITFOR_TIMEOUT="${1#*=}"
     shift 1
     ;;
-    --)
+  --)
     shift
     break
     ;;
-    --help)
+  --help)
     usage 0
     ;;
-    *)
+  *)
     echoerr "unknown argument: $1"
     usage 1
     ;;
