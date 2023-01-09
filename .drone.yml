@@ -83,7 +83,7 @@ platform:
 
 steps:
   - name: dryrun
-    image: thegeeklab/drone-docker:19
+    image: thegeeklab/drone-docker-buildx:20
     settings:
       dockerfile: docker/Dockerfile.amd64
       dry_run: true
@@ -97,7 +97,7 @@ steps:
         - refs/pull/**
 
   - name: publish-dockerhub
-    image: thegeeklab/drone-docker:19
+    image: thegeeklab/drone-docker-buildx:20
     settings:
       auto_tag: true
       auto_tag_suffix: amd64
@@ -113,7 +113,7 @@ steps:
         - refs/tags/**
 
   - name: publish-quay
-    image: thegeeklab/drone-docker:19
+    image: thegeeklab/drone-docker-buildx:20
     settings:
       auto_tag: true
       auto_tag_suffix: amd64
@@ -148,7 +148,7 @@ platform:
 
 steps:
   - name: dryrun
-    image: thegeeklab/drone-docker:19
+    image: thegeeklab/drone-docker-buildx:20
     settings:
       dockerfile: docker/Dockerfile.arm64
       dry_run: true
@@ -162,7 +162,7 @@ steps:
         - refs/pull/**
 
   - name: publish-dockerhub
-    image: thegeeklab/drone-docker:19
+    image: thegeeklab/drone-docker-buildx:20
     settings:
       auto_tag: true
       auto_tag_suffix: arm64
@@ -178,76 +178,11 @@ steps:
         - refs/tags/**
 
   - name: publish-quay
-    image: thegeeklab/drone-docker:19
+    image: thegeeklab/drone-docker-buildx:20
     settings:
       auto_tag: true
       auto_tag_suffix: arm64
       dockerfile: docker/Dockerfile.arm64
-      password:
-        from_secret: quay_password
-      registry: quay.io
-      repo: quay.io/thegeeklab/${DRONE_REPO_NAME}
-      username:
-        from_secret: quay_username
-    when:
-      ref:
-        - refs/heads/main
-        - refs/tags/**
-
-trigger:
-  ref:
-    - refs/heads/main
-    - refs/tags/**
-    - refs/pull/**
-
-depends_on:
-  - test
-
----
-kind: pipeline
-name: build-container-arm
-
-platform:
-  os: linux
-  arch: arm
-
-steps:
-  - name: dryrun
-    image: thegeeklab/drone-docker:19
-    settings:
-      dockerfile: docker/Dockerfile.arm
-      dry_run: true
-      password:
-        from_secret: docker_password
-      repo: thegeeklab/${DRONE_REPO_NAME}
-      username:
-        from_secret: docker_username
-    when:
-      ref:
-        - refs/pull/**
-
-  - name: publish-dockerhub
-    image: thegeeklab/drone-docker:19
-    settings:
-      auto_tag: true
-      auto_tag_suffix: arm
-      dockerfile: docker/Dockerfile.arm
-      password:
-        from_secret: docker_password
-      repo: thegeeklab/${DRONE_REPO_NAME}
-      username:
-        from_secret: docker_username
-    when:
-      ref:
-        - refs/heads/main
-        - refs/tags/**
-
-  - name: publish-quay
-    image: thegeeklab/drone-docker:19
-    settings:
-      auto_tag: true
-      auto_tag_suffix: arm
-      dockerfile: docker/Dockerfile.arm
       password:
         from_secret: quay_password
       registry: quay.io
@@ -359,11 +294,10 @@ trigger:
 
 depends_on:
   - build-container-amd64
-  - build-container-arm
   - build-container-arm64
 
 ---
 kind: signature
-hmac: 510f261e08feecd3c9785b81e9e01c38c1716b448a6eb6866279824e533b71d9
+hmac: 3e7e2fbea98665a73dd5c58732d3a9f6b9e3cbade5fc8fb0b43e50d1f5297bc3
 
 ...
