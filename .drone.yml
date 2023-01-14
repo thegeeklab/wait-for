@@ -75,7 +75,7 @@ depends_on:
 
 ---
 kind: pipeline
-name: build-container-amd64
+name: build-container
 
 platform:
   os: linux
@@ -85,13 +85,15 @@ steps:
   - name: dryrun
     image: thegeeklab/drone-docker-buildx:20
     settings:
-      dockerfile: docker/Dockerfile.amd64
+      dockerfile: Dockerfile.multiarch
       dry_run: true
-      password:
-        from_secret: docker_password
+      platforms:
+        - linux/amd64
+        - linux/arm64
+        - linux/arm/v7
+        - linux/arm/v6
+      provenance: false
       repo: thegeeklab/${DRONE_REPO_NAME}
-      username:
-        from_secret: docker_username
     when:
       ref:
         - refs/pull/**
@@ -100,10 +102,15 @@ steps:
     image: thegeeklab/drone-docker-buildx:20
     settings:
       auto_tag: true
-      auto_tag_suffix: amd64
-      dockerfile: docker/Dockerfile.amd64
+      dockerfile: Dockerfile.multiarch
       password:
         from_secret: docker_password
+      platforms:
+        - linux/amd64
+        - linux/arm64
+        - linux/arm/v7
+        - linux/arm/v6
+      provenance: false
       repo: thegeeklab/${DRONE_REPO_NAME}
       username:
         from_secret: docker_username
@@ -111,15 +118,22 @@ steps:
       ref:
         - refs/heads/main
         - refs/tags/**
+    depends_on:
+      - dryrun
 
   - name: publish-quay
     image: thegeeklab/drone-docker-buildx:20
     settings:
       auto_tag: true
-      auto_tag_suffix: amd64
-      dockerfile: docker/Dockerfile.amd64
+      dockerfile: Dockerfile.multiarch
       password:
         from_secret: quay_password
+      platforms:
+        - linux/amd64
+        - linux/arm64
+        - linux/arm/v7
+        - linux/arm/v6
+      provenance: false
       registry: quay.io
       repo: quay.io/thegeeklab/${DRONE_REPO_NAME}
       username:
@@ -128,71 +142,8 @@ steps:
       ref:
         - refs/heads/main
         - refs/tags/**
-
-trigger:
-  ref:
-    - refs/heads/main
-    - refs/tags/**
-    - refs/pull/**
-
-depends_on:
-  - test
-
----
-kind: pipeline
-name: build-container-arm64
-
-platform:
-  os: linux
-  arch: arm64
-
-steps:
-  - name: dryrun
-    image: thegeeklab/drone-docker-buildx:20
-    settings:
-      dockerfile: docker/Dockerfile.arm64
-      dry_run: true
-      password:
-        from_secret: docker_password
-      repo: thegeeklab/${DRONE_REPO_NAME}
-      username:
-        from_secret: docker_username
-    when:
-      ref:
-        - refs/pull/**
-
-  - name: publish-dockerhub
-    image: thegeeklab/drone-docker-buildx:20
-    settings:
-      auto_tag: true
-      auto_tag_suffix: arm64
-      dockerfile: docker/Dockerfile.arm64
-      password:
-        from_secret: docker_password
-      repo: thegeeklab/${DRONE_REPO_NAME}
-      username:
-        from_secret: docker_username
-    when:
-      ref:
-        - refs/heads/main
-        - refs/tags/**
-
-  - name: publish-quay
-    image: thegeeklab/drone-docker-buildx:20
-    settings:
-      auto_tag: true
-      auto_tag_suffix: arm64
-      dockerfile: docker/Dockerfile.arm64
-      password:
-        from_secret: quay_password
-      registry: quay.io
-      repo: quay.io/thegeeklab/${DRONE_REPO_NAME}
-      username:
-        from_secret: quay_username
-    when:
-      ref:
-        - refs/heads/main
-        - refs/tags/**
+    depends_on:
+      - dryrun
 
 trigger:
   ref:
@@ -212,34 +163,6 @@ platform:
   arch: amd64
 
 steps:
-  - name: manifest-dockerhub
-    image: plugins/manifest
-    settings:
-      auto_tag: true
-      ignore_missing: true
-      password:
-        from_secret: docker_password
-      spec: docker/manifest.tmpl
-      username:
-        from_secret: docker_username
-    when:
-      status:
-        - success
-
-  - name: manifest-quay
-    image: plugins/manifest
-    settings:
-      auto_tag: true
-      ignore_missing: true
-      password:
-        from_secret: quay_password
-      spec: docker/manifest-quay.tmpl
-      username:
-        from_secret: quay_username
-    when:
-      status:
-        - success
-
   - name: pushrm-dockerhub
     pull: always
     image: chko/docker-pushrm:1
@@ -293,11 +216,10 @@ trigger:
     - failure
 
 depends_on:
-  - build-container-amd64
-  - build-container-arm64
+  - build-container
 
 ---
 kind: signature
-hmac: 3e7e2fbea98665a73dd5c58732d3a9f6b9e3cbade5fc8fb0b43e50d1f5297bc3
+hmac: c9ba430b27bdede43e21fdf8789eb962c9d7048062c7a7c274c08f52d7faeb63
 
 ...
