@@ -20,9 +20,9 @@ steps:
   - name: test-bash
     image: bats/bats
     commands:
-      - apk add bash
       - rm -rf /usr/bin/nc
-      - bats ./wait-for.bats
+      - apk add bash
+      - bats -x ./wait-for.bats
 
 trigger:
   ref:
@@ -227,6 +227,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 67d567ac7cc3590ba7884b2088aa305d9428e110de180c7253f5cfaf217a3760
+hmac: 19fee60a3a9233c2782a65b86de49e7878f783bcc9d1fc1bf927352779952ada
 
 ...
