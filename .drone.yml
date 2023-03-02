@@ -12,9 +12,16 @@ steps:
     commands:
       - shellcheck ./wait-for
 
-  - name: test
+  - name: test-nc
     image: bats/bats
     commands:
+      - bats ./wait-for.bats
+
+  - name: test-bash
+    image: bats/bats
+    commands:
+      - rm -rf /usr/bin/nc
+      - apk add bash
       - bats ./wait-for.bats
 
 trigger:
@@ -220,6 +227,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 52a6f7275d25c344cfe1d072d1a2b2a8eb95ffa82962921ae872443565a52b33
+hmac: bd88ea52d53fb53375b5a4e4e905f2b7e76760ec88fe81d4a0df93319ad635e4
 
 ...
