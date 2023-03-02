@@ -21,7 +21,6 @@ steps:
     image: bats/bats
     commands:
       - rm -rf /usr/bin/nc
-      - apk add bash
       - bats ./wait-for.bats
 
 trigger:
@@ -227,6 +226,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: bd88ea52d53fb53375b5a4e4e905f2b7e76760ec88fe81d4a0df93319ad635e4
+hmac: dcda7aed778df0aa478080900afef24612002100c54286b04d82fc22dc534e07
 
 ...

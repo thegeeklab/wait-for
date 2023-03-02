@@ -86,7 +86,7 @@ if [ -x "$(command -v bash)" ]; then
   HAS_BASH=1
 fi
 
-if [ "$HAS_NC" != 1 ] || [ "$HAS_BASH" != 1 ]; then
+if [ "$HAS_NC" != 1 ] && [ "$HAS_BASH" != 1 ]; then
   echoerr "error: netcat or bash is required for wait-for to run"
   exit 1
 fi
