@@ -22,7 +22,7 @@ steps:
     commands:
       - rm -rf /usr/bin/nc
       - apk add bash
-      - bats -x ./wait-for.bats
+      - bats ./wait-for.bats
 
 trigger:
   ref:
@@ -227,6 +227,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 19fee60a3a9233c2782a65b86de49e7878f783bcc9d1fc1bf927352779952ada
+hmac: bd88ea52d53fb53375b5a4e4e905f2b7e76760ec88fe81d4a0df93319ad635e4
 
 ...
