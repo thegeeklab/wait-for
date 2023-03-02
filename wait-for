@@ -3,9 +3,6 @@
 WAITFOR_TIMEOUT=${WAITFOR_TIMEOUT:-15}
 WAITFOR_QUIET=${WAITFOR_QUIET:-0}
 
-HAS_NC=0
-HAS_BASH=0
-
 echoerr() {
   if [ "$WAITFOR_QUIET" -ne 1 ]; then printf "%s\n" "$*" 1>&2; fi
 }
@@ -27,9 +24,9 @@ USAGE
 
 wait_for() {
   for _ in $(seq "$WAITFOR_TIMEOUT"); do
-    if [ $HAS_NC = 1 ]; then
+    if [ "$HAS_NC" = 1 ]; then
       nc -w 1 -z "$WAITFOR_HOST" "$WAITFOR_PORT" >/dev/null 2>&1
-    elif [ $HAS_BASH = 1 ]; then
+    elif [ "$HAS_BASH" = 1 ]; then
       # shellcheck disable=SC3025
       bash -c "</dev/tcp/$WAITFOR_HOST/$WAITFOR_PORT" >/dev/null 2>&1
     fi
@@ -89,7 +86,7 @@ if [ -x "$(command -v bash)" ]; then
   HAS_BASH=1
 fi
 
-if [ $HAS_NC = 0 ] || [ $HAS_BASH = 0 ]; then
+if [ "$HAS_NC" != 1 ] || [ "$HAS_BASH" != 1 ]; then
   echoerr "error: netcat or bash is required for wait-for to run"
   exit 1
 fi
