@@ -29,7 +29,7 @@ optional arguments:
 
 ## Dependencies
 
-- Installed Netcat
+- Installed Netcat or Bash (to use `/dev/tcp`)
 
 ## Examples
 
