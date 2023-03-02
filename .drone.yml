@@ -12,9 +12,16 @@ steps:
     commands:
       - shellcheck ./wait-for
 
-  - name: test
+  - name: test-nc
     image: bats/bats
     commands:
+      - bats ./wait-for.bats
+
+  - name: test-bash
+    image: bats/bats
+    commands:
+      - apk add bash
+      - rm -rf /usr/bin/nc
       - bats ./wait-for.bats
 
 trigger:
