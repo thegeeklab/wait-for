@@ -31,7 +31,7 @@ wait_for() {
       nc -w 1 -z "$WAITFOR_HOST" "$WAITFOR_PORT" >/dev/null 2>&1
     elif [ $HAS_BASH = 1 ]; then
       # shellcheck disable=SC3025
-      (echo >/dev/tcp/"$WAITFOR_HOST"/"$WAITFOR_PORT") >/dev/null 2>&1
+      bash -c "</dev/tcp/$WAITFOR_HOST/$WAITFOR_PORT" >/dev/null 2>&1
     fi
 
     result=$?
