@@ -9,7 +9,7 @@ steps:
   dryrun:
     image: quay.io/thegeeklab/wp-docker-buildx:1
     settings:
-      containerfile: Dockerfile.multiarch
+      containerfile: Congainerfile.multiarch
       dry_run: true
       platforms:
         - linux/amd64
@@ -26,7 +26,7 @@ steps:
     image: quay.io/thegeeklab/wp-docker-buildx:1
     settings:
       auto_tag: true
-      containerfile: Dockerfile.multiarch
+      containerfile: Congainerfile.multiarch
       password:
         from_secret: docker_password
       platforms:
@@ -49,7 +49,7 @@ steps:
     image: quay.io/thegeeklab/wp-docker-buildx:1
     settings:
       auto_tag: true
-      containerfile: Dockerfile.multiarch
+      containerfile: Congainerfile.multiarch
       password:
         from_secret: quay_password
       platforms:
