@@ -52,7 +52,7 @@ branches:
         contexts:
           - ci/woodpecker/pr/test
           - ci/woodpecker/pr/build-package
-          - ci/woodpecker/pr/docs
+          - ci/woodpecker/pr/build-container
       enforce_admins: false
       required_linear_history: true
       restrictions: null
