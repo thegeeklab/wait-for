@@ -1,0 +1,25 @@
+---
+when:
+  - event: [pull_request, tag]
+  - event: [push, manual]
+    branch:
+      - ${CI_REPO_DEFAULT_BRANCH}
+
+steps:
+  lint:
+    group: test
+    image: docker.io/koalaman/shellcheck-alpine:stable
+    commands:
+      - shellcheck ./wait-for
+
+  test-ncat:
+    group: test
+    image: docker.io/bats/bats
+    commands:
+      - bats ./wait-for.bats
+
+  test-bash:
+    image: docker.io/bats/bats
+    commands:
+      - rm -rf /usr/bin/nc
+      - bats ./wait-for.bats
