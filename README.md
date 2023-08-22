@@ -1,6 +1,6 @@
 # wait-for
 
-Poor-mans servie synchronizer
+Poor-mans service synchronizer
 
 [![Build Status](https://ci.thegeeklab.de/api/badges/thegeeklab/wait-for/status.svg)](https://ci.thegeeklab.de/repos/thegeeklab/wait-for)
 [![Docker Hub](https://img.shields.io/badge/dockerhub-latest-blue.svg?logo=docker&logoColor=white)](https://hub.docker.com/r/thegeeklab/wait-for)
