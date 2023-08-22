@@ -23,5 +23,4 @@ steps:
       - status: [success, failure]
 
 depends_on:
-  - build-binary
-  - build-container
+  - docs
