@@ -9,7 +9,7 @@ steps:
   checksum:
     image: quay.io/thegeeklab/alpine-tools
     commands:
-      - cd dist/ && sha256sum * > ../sha256sum.txt
+      - sha256sum wait-for > sha256sum.txt
 
   changelog:
     image: quay.io/thegeeklab/git-sv
