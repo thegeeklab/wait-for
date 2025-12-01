@@ -1,0 +1,15 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "dictionaries": ["en_us", "bash"],
+  "words": ["Kaussow", "thegeeklab", "netcat"],
+  "ignorePaths": [
+    ".woodpecker",
+    ".cspell.json",
+    ".git/**/*",
+    ".gitignore",
+    ".vscode",
+    "*.svg"
+  ],
+  "ignoreRegExpList": ["&\\S+;", "{{<.+>}}", "color\\:.*"]
+}

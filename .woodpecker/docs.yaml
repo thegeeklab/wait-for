@@ -6,22 +6,9 @@ when:
       - ${CI_REPO_DEFAULT_BRANCH}
 
 steps:
-  - name: markdownlint
-    image: quay.io/thegeeklab/markdownlint-cli
-    commands:
-      - markdownlint 'README.md' 'CONTRIBUTING.md'
-
-  - name: spellcheck
-    image: quay.io/thegeeklab/alpine-tools
-    commands:
-      - spellchecker --files 'README.md' 'CONTRIBUTING.md' -d .dictionary -p spell indefinite-article syntax-urls
-    environment:
-      FORCE_COLOR: "true"
-      NPM_CONFIG_LOGLEVEL: "error"
-
   - name: pushrm-dockerhub
     image: docker.io/chko/docker-pushrm:1
-    depends_on: [markdownlint, spellcheck]
+    depends_on: []
     environment:
       DOCKER_PASS:
         from_secret: docker_password
@@ -38,7 +25,7 @@ steps:
 
   - name: pushrm-quay
     image: docker.io/chko/docker-pushrm:1
-    depends_on: [markdownlint, spellcheck]
+    depends_on: []
     environment:
       APIKEY__QUAY_IO:
         from_secret: quay_token

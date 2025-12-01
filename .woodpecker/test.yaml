@@ -6,12 +6,6 @@ when:
       - ${CI_REPO_DEFAULT_BRANCH}
 
 steps:
-  - name: lint
-    image: docker.io/koalaman/shellcheck-alpine:stable
-    depends_on: []
-    commands:
-      - shellcheck ./wait-for
-
   - name: test-ncat
     image: docker.io/bats/bats
     depends_on: []
