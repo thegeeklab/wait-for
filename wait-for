@@ -3,12 +3,12 @@
 WAITFOR_TIMEOUT=${WAITFOR_TIMEOUT:-15}
 WAITFOR_QUIET=${WAITFOR_QUIET:-0}
 
-echoerr() {
+log_err() {
   if [ "$WAITFOR_QUIET" -ne 1 ]; then printf "%s\n" "$*" 1>&2; fi
 }
 
 usage() {
-  exitcode="$1"
+  exit_code="$1"
   cat <<USAGE >&2
 usage: wait-for host:port [-t timeout] [-- command args]
 
@@ -19,7 +19,7 @@ optional arguments:
   -t WAITFOR_TIMEOUT | --timeout=timeout    Timeout in seconds, zero for no timeout
   -- COMMAND ARGS                           Execute command with args after the test finishes
 USAGE
-  exit "$exitcode"
+  exit "$exit_code"
 }
 
 wait_for() {
@@ -72,7 +72,7 @@ while [ $# -gt 0 ]; do
     usage 0
     ;;
   *)
-    echoerr "unknown argument: $1"
+    log_err "unknown argument: $1"
     usage 1
     ;;
   esac
@@ -87,12 +87,12 @@ if [ -x "$(command -v bash)" ]; then
 fi
 
 if [ "$HAS_NC" != 1 ] && [ "$HAS_BASH" != 1 ]; then
-  echoerr "error: netcat or bash is required for wait-for to run"
+  log_err "error: netcat or bash is required for wait-for to run"
   exit 1
 fi
 
 if [ "$WAITFOR_HOST" = "" ] || [ "$WAITFOR_PORT" = "" ]; then
-  echoerr "error: you need to provide a host and port to test"
+  log_err "error: you need to provide a host and port to test"
   usage 2
 fi
 

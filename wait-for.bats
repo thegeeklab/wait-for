@@ -7,7 +7,7 @@
 }
 
 @test "nonexistent server should not start command" {
-  run ./wait-for -t 1 noserver:9999 -- echo 'success'
+  run ./wait-for -t 1 unknown-server:9999 -- echo 'success'
 
   [ "$status" -ne 0 ]
   [ "$output" != "success" ]

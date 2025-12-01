@@ -1,5 +1,7 @@
 # wait-for
 
+<!-- cspell:ignore eficode -->
+
 Poor-mans service synchronizer
 
 [![Build Status](https://ci.thegeeklab.de/api/badges/thegeeklab/wait-for/status.svg)](https://ci.thegeeklab.de/repos/thegeeklab/wait-for)

@@ -17,7 +17,7 @@ steps:
 
   - name: security-scan
     image: docker.io/aquasec/trivy
-    depends_on: security-build
+    depends_on: [security-build]
     commands:
       - trivy -v
       - trivy image --input oci/${CI_REPO_NAME}
@@ -77,4 +77,5 @@ steps:
           - ${CI_REPO_DEFAULT_BRANCH}
 
 depends_on:
+  - static
   - test
