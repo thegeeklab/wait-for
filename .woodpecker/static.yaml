@@ -19,7 +19,7 @@ steps:
       - cspell-cli lint . --gitignore --color
 
   - name: link-validation
-    image: docker.io/lycheeverse/lychee:0.22
+    image: docker.io/lycheeverse/lychee:0.23
     depends_on: []
     commands:
       - lychee --no-progress --format detailed README.md
