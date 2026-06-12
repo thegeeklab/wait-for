@@ -9,7 +9,8 @@ LABEL org.opencontainers.image.documentation="https://github.com/thegeeklab/wait
 
 ADD wait-for /usr/local/bin/wait-for
 
-RUN apk --no-cache add netcat-openbsd
+RUN apk --no-cache add netcat-openbsd && \
+    apk upgrade --no-cache libcrypto3
 
 USER root
 CMD []
