@@ -2,7 +2,7 @@
   "version": "0.2",
   "language": "en",
   "dictionaries": ["en_us", "bash"],
-  "words": ["Kaussow", "thegeeklab", "netcat"],
+  "words": ["Kaussow", "thegeeklab", "netcat", "libcrypto"],
   "ignorePaths": [
     ".woodpecker",
     ".cspell.json",
